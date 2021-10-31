@@ -65,6 +65,36 @@ async function run(){
             res.json(result);
         } )
 
+        //GET API for manage all orders
+        app.get('/bookings' , async(req , res)=>{
+            const cursor = bookingsCollection.find({});
+            const booking = await cursor.toArray();
+            res.send(booking);
+        
+        })
+
+        //UPDATE API for booking status
+        app.put('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateBooking = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    name: updateBooking.name,
+                    email: updateBooking.email,
+                    phone:updateBooking.phone,
+                    age:updateBooking.age,
+                    address:updateBooking.address,
+                    packageName:updateBooking.packageName,
+                    status:updateBooking.status
+                },
+            };
+            const result = await bookingsCollection.updateOne(filter, updateDoc, options)
+            console.log('updating', id)
+            res.json(result)
+        })
+
     }
     finally{
 
