@@ -22,15 +22,23 @@ async function run(){
         await client.connect();
         console.log('Database connected successfully');
         const database = client.db('tourism');
-        const servicesCollection = database.collection('packages');
+        const packagesCollection = database.collection('packages');
 
         // GET API ALL 
         app.get('/packages' ,async (req , res)=>{
-            const cursor = servicesCollection.find({});
+            const cursor = packagesCollection.find({});
             const packages = await cursor.toArray();
             res.send(packages);
           
           })
+
+        //   GET API by id 
+        app.get('/packages/:id' ,async (req , res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const package = await packagesCollection.findOne(query)
+            res.json(package);
+        })
 
     }
     finally{
