@@ -23,6 +23,7 @@ async function run(){
         console.log('Database connected successfully');
         const database = client.db('tourism');
         const packagesCollection = database.collection('packages');
+        const bookingsCollection = database.collection('bookings');
 
         // GET API ALL 
         app.get('/packages' ,async (req , res)=>{
@@ -38,6 +39,22 @@ async function run(){
             const query = {_id: ObjectId(id)};
             const package = await packagesCollection.findOne(query)
             res.json(package);
+        })
+        //POST api for bookings
+        app.post('/bookings' ,async (req , res)=>{
+            const booking = req.body;
+            const result = await bookingsCollection.insertOne(booking);
+           res.json(result);
+        })
+
+        //GET API for myOrder
+        app.get('/bookings/:email' , async(req , res)=>{
+            const email = req.params.email;
+            const query = {email};
+            const cursor = bookingsCollection.find(query);
+            const booking = await cursor.toArray()
+           res.json(booking)
+        
         })
 
     }
