@@ -47,7 +47,7 @@ async function run(){
            res.json(result);
         })
 
-        //GET API for myOrder
+        //GET API for myBookings
         app.get('/bookings/:email' , async(req , res)=>{
             const email = req.params.email;
             const query = {email};
@@ -56,6 +56,14 @@ async function run(){
            res.json(booking)
         
         })
+
+        //DELETE api for myBookings
+        app.delete('/bookings/:id', async (req,res) =>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await bookingsCollection.deleteOne(query);
+            res.json(result);
+        } )
 
     }
     finally{
