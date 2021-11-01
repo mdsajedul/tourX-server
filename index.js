@@ -33,6 +33,14 @@ async function run(){
           
           })
 
+        //   POST API for package 
+        app.post('/packages' ,async (req , res)=>{
+            const newPackage = req.body;
+            const result = await packagesCollection.insertOne(newPackage);
+           res.json(result);
+        
+        })
+
         //   GET API by id 
         app.get('/packages/:id' ,async (req , res)=>{
             const id = req.params.id;
