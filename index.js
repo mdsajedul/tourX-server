@@ -89,12 +89,7 @@ async function run(){
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    // name: updateBooking.name,
-                    // email: updateBooking.email,
-                    // phone:updateBooking.phone,
-                    // age:updateBooking.age,
-                    // address:updateBooking.address,
-                    // packageName:updateBooking.packageName,
+                    
                     status:updateBooking.status
                 },
             };
